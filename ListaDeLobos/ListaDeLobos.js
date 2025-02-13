@@ -40,7 +40,7 @@ async function pegarid() {
     let listadelobos = [];
     let indexsaida=0
     let i=loboatual
-    while(indexsaida<4 || i>listaSelecionada.length){
+    while(indexsaida<4 && i<listaSelecionada.length){
         let idvalido = listaSelecionada[i].id;
         let lobovalido = listaSelecionada.find(lobo => lobo.id === idvalido);
         if(lobovalido!=null || lobovalido!=undefined){
