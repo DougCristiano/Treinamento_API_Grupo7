@@ -41,14 +41,11 @@ async function listadelobos() {
       let descricao = document.createElement("p");
 
       linkFoto.href = "../ShowLobo/ShowLobo.html";
-      linkFoto.addEventListener("click", async function (event) {
-          event.preventDefault();
-          await fetch('http://localhost:3000/lobosExtras', {
-              method: 'POST',
-              headers: { 'Content-type': 'application/json' },
-              body: JSON.stringify(lobo),
-          });
-          window.location.href = "../ShowLobo/ShowLobo.html";
+      linkFoto.addEventListener("click", function () {
+          
+          let loboatualid = lobo.id;
+          localStorage.setItem("lobotemp", loboatualid);
+          window.location.href ="../ShowLobo/ShowLobo.html"; 
       });
 
       foto.src = lobo.imagem;
@@ -87,14 +84,10 @@ async function listadelobos() {
     let descricao = document.createElement("p");
 
     linkFoto.href = "../ShowLobo/ShowLobo.html";
-    linkFoto.addEventListener("click", async function (event) {
-        event.preventDefault();
-        await fetch('http://localhost:3000/lobosExtras', {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify(lobo),
-        });
-        window.location.href = "../ShowLobo/ShowLobo.html";
+    linkFoto.addEventListener("click",  function () {
+      let loboatualid = lobo.id;
+      localStorage.setItem("lobotemp", loboatualid);
+      window.location.href ="../ShowLobo/ShowLobo.html"; 
     });
 
     foto.src = lobo.imagem;

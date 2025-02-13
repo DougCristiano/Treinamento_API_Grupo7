@@ -1,14 +1,15 @@
 
 let idremover = 0;
 async function aparecerlobo() {
-    const respostashow = await fetch('http://localhost:3000/lobosExtras', {
+    const respostashow = await fetch('http://localhost:3000/lobos', {
         method: 'GET',
         headers: {
           'Content-type': 'application/json',
         },
       })
       const lobosArray = await respostashow.json();
-      const lobodalista = lobosArray.length > 0 ? lobosArray[0] : null;
+      const lobolocal = localStorage.getItem("lobotemp"); 
+      const lobodalista = lobosArray.find(item => item.id === lobolocal);
       console.log(lobodalista)
 
     let lobo1 = document.createElement("div");
@@ -24,25 +25,10 @@ async function aparecerlobo() {
     adota.innerText = "Adotar";
     adota.addEventListener("click", async function () {
       if(lobodalista.adotado === false){
-          const respostalink2 = await fetch('http://localhost:3000/lobosExtras', {
-              method: 'POST',
-              headers: {
-                'Content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                id: lobodalista.id,
-                nome: lobodalista.nome,
-                idade: lobodalista.idade,
-                descricao: lobodalista.descricao,
-                imagem: lobodalista.imagem,
-                adotado: lobodalista.adotado,
-                nomeDono: lobodalista.nomeDono,
-                idadeDono: lobodalista.idadeDono,
-                emailDono: lobodalista.emailDono,
-              })
-            })
-            const data = await respostalink2.json()
-          window.location.href = "../AdotarLobo/AdotarLobo.html";}
+        let loboatualid = lobodalista.id;
+        localStorage.setItem("lobotemp", loboatualid);
+     
+        window.location.href = "../AdotarLobo/AdotarLobo.html";}
       else{
           alert("Esse lobo já está adotado!")
       }
@@ -67,7 +53,7 @@ async function aparecerlobo() {
             return;
         }
     });
-    console.log(lobodalista)
+ 
     let texto_exemplo = document.createElement("p");
     texto_exemplo.innerText = lobodalista.descricao;
 
@@ -109,19 +95,7 @@ async function aparecerlobo() {
     idremover = idremove
     
 }
-window.addEventListener("unload",async function () {
-  await fetch(`http://localhost:3000/lobosExtras/${idremover}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-    });
-  navigator.sendBeacon(url, JSON.stringify({}));
-});
-window.addEventListener("beforeunload", async function () {
-  await fetch(`http://localhost:3000/lobosExtras/${idremover}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-  });
-});
+
 document.addEventListener("DOMContentLoaded", function () {
     aparecerlobo();
 });

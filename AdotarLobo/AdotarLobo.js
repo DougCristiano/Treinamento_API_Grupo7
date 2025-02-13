@@ -1,6 +1,6 @@
 
 
-
+const lobolocal = localStorage.getItem("lobotemp"); //pega o ID do lobo da pagina anterior que foi clicado
 let donos=0
 
 

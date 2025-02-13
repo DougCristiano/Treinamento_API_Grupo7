@@ -110,26 +110,10 @@ async function listadelobos(){
         foto.src = src
         
         link_foto.href = "../ShowLobo/ShowLobo.html"
-        link_foto.addEventListener("click", async function() {
-            const respotalink = await fetch('http://localhost:3000/lobosExtras', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: lobodalista.id,
-                    nome: lobodalista.nome,
-                    idade: lobodalista.idade,
-                    descricao: lobodalista.descricao,
-                    imagem: lobodalista.imagem,
-                    adotado: lobodalista.adotado,
-                    nomeDono: lobodalista.nomeDono,
-                    idadeDono: lobodalista.idadeDono,
-                    emailDono: lobodalista.emailDono,
-                    
-                }),
-            })
-            const data = await respotalink.json();    
+        link_foto.addEventListener("click",  function() {
+            let loboatualid = lobodalista.id;
+            localStorage.setItem("lobotemp", loboatualid);
+         
             window.location.href ="../ShowLobo/ShowLobo.html"; 
         })           
         
@@ -151,8 +135,8 @@ async function listadelobos(){
         }else{
             botao.innerText = "Adotar";
             botao.addEventListener("click", function() {
-            localStorage.setItem("lobotemp", lobodalista.id);
-            window.location.href = "../AdotarLobo/AdotarLobo.html"; 
+                localStorage.setItem("lobotemp", lobodalista.id);
+                window.location.href = "../AdotarLobo/AdotarLobo.html"; 
             });
         }
         let descricao = document.createElement("p");
