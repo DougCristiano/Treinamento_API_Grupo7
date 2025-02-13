@@ -10,7 +10,7 @@ Adotar Lobinho: página para a efetivação da adoção, onde o usuário insere 
 Quem Somos: apresenta os integrantes do projeto, incluindo trocadilhos com animais para tornar o conteúdo mais descontraído.
 
 Integrantes:
-Anderson Gomes;
+Anderson S. Gomes;
 Carlos Alberto;
 Douglas Criatiano;
 Leonardo Conz.
