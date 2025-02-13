@@ -1,0 +1,15 @@
+{
+  "name": "pagina-lobinho-api",
+  "version": "1.0.0",
+  "description": "Adote um Lob[IN]ho é um projeto desenvolvido pela IN Junior para o processo seletivo de 2025.1, com o objetivo de construir um site para a iniciativa.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
