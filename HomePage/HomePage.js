@@ -5,7 +5,7 @@ async function getLobos() {
   });
   return await resposta.json();
 }
-console.log(getLobos())
+
 
 function escolherIndiceImpar(lobos) {
   const lobosImpares = lobos.filter((_, index) => index % 2 !== 0);
@@ -24,12 +24,12 @@ async function listadelobos() {
       return;
   }
 
-  const primeirolobo = escolherIndicePar(lobos);
-  const segundolobo = escolherIndiceImpar(lobos);
+  const primeirolobo = escolherIndiceImpar(lobos);
+  const segundolobo = escolherIndicePar(lobos);
 
   console.log(primeirolobo, segundolobo);
 
-  function criarElementoLobo1(lobo, containerSelector, imagemSrc) {
+  function criarElementoLobo1(lobo) {
       let engloba = document.createElement("div");
       let imagemExemplo = document.createElement("div");
       let fundoAzul = document.createElement("div");
@@ -51,7 +51,7 @@ async function listadelobos() {
           window.location.href = "../ShowLobo/ShowLobo.html";
       });
 
-      foto.src = imagemSrc;
+      foto.src = lobo.imagem;
       foto.alt = "Foto do Lobo";
       nome.innerText = lobo.nome;
       idade.innerText = `Idade: ${lobo.idade}`;
@@ -71,11 +71,11 @@ async function listadelobos() {
       textoExemplo.append(nome, idade, descricao);
       engloba.append(imagemExemplo, textoExemplo);
 
-      let container = document.querySelector(containerSelector);
-      container.innerHTML = "";
+      let container = document.querySelector(".lobo_exemplo1");
+      
       container.append(engloba);
   }
-  function criarElementoLobo2(lobo, containerSelector, imagemSrc) {
+  function criarElementoLobo2(lobo) {
     let engloba = document.createElement("div");
     let imagemExemplo = document.createElement("div");
     let fundoAzul = document.createElement("div");
@@ -97,7 +97,7 @@ async function listadelobos() {
         window.location.href = "../ShowLobo/ShowLobo.html";
     });
 
-    foto.src = imagemSrc;
+    foto.src = lobo.imagem;
     foto.alt = "Foto do Lobo";
     nome.innerText = lobo.nome;
     idade.innerText = `Idade: ${lobo.idade}`;
@@ -117,12 +117,12 @@ async function listadelobos() {
     textoExemplo.append(nome, idade, descricao);
     engloba.append(imagemExemplo, textoExemplo);
 
-    let container = document.querySelector(containerSelector);
-    container.innerHTML = "";
+    let container = document.querySelector(".lobo_exemplo1");
+    
     container.append(engloba);
 }
-  criarElementoLobo1(primeirolobo, ".lobo_exemplo1", "../images/loboexemplo.png");
-  criarElementoLobo2(segundolobo, ".lobo_exemplo2", "../images/loboexemplo2.png");
+  criarElementoLobo1(primeirolobo);
+  criarElementoLobo2(segundolobo);
 }
 
 document.addEventListener("DOMContentLoaded", listadelobos);
