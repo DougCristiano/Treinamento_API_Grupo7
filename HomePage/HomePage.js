@@ -48,7 +48,7 @@ async function listadelobos() {
               headers: { 'Content-type': 'application/json' },
               body: JSON.stringify(lobo),
           });
-          window.location.href = "ShowLobo.html";
+          window.location.href = "../ShowLobo/ShowLobo.html";
       });
 
       foto.src = imagemSrc;
@@ -94,7 +94,7 @@ async function listadelobos() {
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(lobo),
         });
-        window.location.href = "ShowLobo.html";
+        window.location.href = "../ShowLobo/ShowLobo.html";
     });
 
     foto.src = imagemSrc;
