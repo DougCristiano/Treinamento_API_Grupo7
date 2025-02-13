@@ -1,5 +1,5 @@
 
-
+let idremover = 0;
 async function aparecerlobo() {
     const respostashow = await fetch('http://localhost:3000/lobosExtras', {
         method: 'GET',
@@ -106,16 +106,22 @@ async function aparecerlobo() {
     let divnome = document.querySelector(".titulo_exemplo");
     divnome.append(nome);
     let idremove = Number(lobodalista.id);
-    console.log(idremove)
-    const respostadelete = await fetch(`http://localhost:3000/lobosExtras/${idremove}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-type': 'application/json',
-        },
-      })
-    const deletado = await respostadelete.json()
+    idremover = idremove
+    
 }
-
+window.addEventListener("unload",async function () {
+  await fetch(`http://localhost:3000/lobosExtras/${idremover}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+    });
+  navigator.sendBeacon(url, JSON.stringify({}));
+});
+window.addEventListener("beforeunload", async function () {
+  await fetch(`http://localhost:3000/lobosExtras/${idremover}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+  });
+});
 document.addEventListener("DOMContentLoaded", function () {
     aparecerlobo();
 });

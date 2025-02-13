@@ -17,11 +17,12 @@ async function getlobos(){
 
 document.getElementById("checkbox").addEventListener("change", function() {
     opcaoAtivada = this.checked; 
+    loboatual = 0
     document.querySelector(".lobo_exemplo").innerHTML = ""; 
     index_lobosvalidos = 0;
     listadelobos();
 });
-
+let loboatual = 0
 async function pegarid() {
     let lobos = await getlobos(); 
 
@@ -37,13 +38,24 @@ async function pegarid() {
         return null;
     } 
     let listadelobos = [];
-    for(i=0;i<4;i++){
-        let lobovalido = listaSelecionada[index_lobosvalidos];
-        index_lobosvalidos++;
-        listadelobos.push(lobovalido)
+    let indexsaida=0
+    let i=loboatual
+    while(indexsaida<4 || i>listaSelecionada.length){
+        let idvalido = listaSelecionada[i].id;
+        let lobovalido = listaSelecionada.find(lobo => lobo.id === idvalido);
+        if(lobovalido!=null || lobovalido!=undefined){
+            index_lobosvalidos++;
+            listadelobos.push(lobovalido)
+            indexsaida++
+            i++
+        }else{
+            i++
+            continue;
+        }
+        loboatual=i
     }
     
-    
+
     return listadelobos;
 }
 //NAO MEXER! ela fez mudar as imagens do banco de dados
@@ -84,18 +96,19 @@ async function pegarid() {
 async function listadelobos(){
     let listadelobos = await pegarid();
     for(i=0;i<4;i++){
-        let lobodalista = listadelobos[i]
         
+        let lobodalista = listadelobos[i]
+        console.log(lobodalista)
 
         let lobo =document.createElement("div");
         let imagem_exemplo = document.createElement("div");
         let fundo_azul = document.createElement("div");
         let link_foto = document.createElement("a")
-        let src = i%2===0?"../images/loboexemplo.png":"../images/loboexemplo2.png"
+        let src = lobodalista.imagem
         
         let foto = document.createElement("img")
         foto.src = src
-        console.log(src)
+        
         link_foto.href = "../ShowLobo/ShowLobo.html"
         link_foto.addEventListener("click", async function() {
             const respotalink = await fetch('http://localhost:3000/lobosExtras', {
