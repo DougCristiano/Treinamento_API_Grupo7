@@ -9,51 +9,43 @@ async function aparecerlobo() {
       })
       const lobosArray = await respostashow.json();
       const lobodalista = lobosArray.length > 0 ? lobosArray[0] : null;
+      console.log(lobodalista)
+
     let lobo1 = document.createElement("div");
-
     let lobo_exemplo = document.createElement("div");
-
     let imagem_exemplo = document.createElement("div");
-
     let fundo_azul = document.createElement("div");
-
     let imagem = document.createElement("img");
-    if (lobodalista.id % 2 === 0) {
-        imagem.src = "../images/loboexemplo2.png";
-    } else {
-        imagem.src = "../images/loboexemplo.png";
-    }
-
+    
+    imagem.src = lobodalista.imagem
     imagem.alt = "Lobo na floresta";
-
     let botao_adocao = document.createElement("div");
-
     let adota = document.createElement("div");
     adota.innerText = "Adotar";
     adota.addEventListener("click", async function () {
-        if(lobodalista.adotado === false){
-            const respostalink2 = await fetch('http://localhost:3000/lobosExtras', {
-                method: 'POST',
-                headers: {
-                  'Content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                  id: lobodalista.id,
-                  nome: lobodalista.nome,
-                  idade: lobodalista.idade,
-                  descricao: lobodalista.descricao,
-                  imagem: lobodalista.i,imagem,
-                  adotado: lobodalista.adotado,
-                  nomeDono: lobodalista.nomeDono,
-                  idadeDono: lobodalista.idadeDono,
-                  emailDono: lobodalista.emailDono,
-                })
+      if(lobodalista.adotado === false){
+          const respostalink2 = await fetch('http://localhost:3000/lobosExtras', {
+              method: 'POST',
+              headers: {
+                'Content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                id: lobodalista.id,
+                nome: lobodalista.nome,
+                idade: lobodalista.idade,
+                descricao: lobodalista.descricao,
+                imagem: lobodalista.imagem,
+                adotado: lobodalista.adotado,
+                nomeDono: lobodalista.nomeDono,
+                idadeDono: lobodalista.idadeDono,
+                emailDono: lobodalista.emailDono,
               })
-              const data = await respostalink2.json()
-            window.location.href = "../AdotarLobo/AdotarLobo.html";}
-        else{
-            alert("Esse lobo já está adotado!")
-        }
+            })
+            const data = await respostalink2.json()
+          window.location.href = "../AdotarLobo/AdotarLobo.html";}
+      else{
+          alert("Esse lobo já está adotado!")
+      }
     });
     let excluir = document.createElement("div");
     excluir.innerText = "Excluir";

@@ -36,212 +36,144 @@ async function pegarid() {
         console.warn("Não há mais lobos disponíveis na categoria selecionada.");
         return null;
     } 
-    let lobovalido = listaSelecionada[index_lobosvalidos];
-    index_lobosvalidos++;
-    
-    return lobovalido;
-}
-
-async function listadelobos(){
+    let listadelobos = [];
     for(i=0;i<4;i++){
+        let lobovalido = listaSelecionada[index_lobosvalidos];
+        index_lobosvalidos++;
+        listadelobos.push(lobovalido)
+    }
+    
+    
+    return listadelobos;
+}
+//NAO MEXER! ela fez mudar as imagens do banco de dados
+//  async function criarimagens(){
+//      try {
+//          let totalLobos = await getlobos(); // Certifique-se de que essa função retorna um número válido
+
+//          let promessas = []; // Array para armazenar as requisições
+//          console.log(totalLobos.length)
+//          for (let i = 1; i <=totalLobos.length; i++) {
+//              let src = i % 2 === 0 ? "../images/loboexemplo2.png" : "../images/loboexemplo.png";
+
+//              // Criando uma requisição fetch e armazenando no array
+//              let promessa = fetch(`http://localhost:3000/lobos/${i}`, {
+//                  method: "PATCH",
+//                  headers: {
+//                      "Content-type": "application/json",
+//                  },
+//                  body: JSON.stringify({ imagem: src }),
+//              }).then(resposta => {
+//                  if (!resposta.ok) {
+//                      throw new Error(`Erro ao atualizar lobo ${i}: ${resposta.status}`);
+//                  }
+//                  return resposta.json();
+//              });
+
+//              promessas.push(promessa);
+//          }
+
+//          // Aguarda todas as requisições finalizarem
+//          await Promise.all(promessas);
+//          console.log("Todas as imagens foram atualizadas com sucesso!");
+//      } catch (erro) {
+//          console.error("Erro ao atualizar as imagens dos lobos:", erro);
+//      }
+    
+//  }
+async function listadelobos(){
+    let listadelobos = await pegarid();
+    for(i=0;i<4;i++){
+        let lobodalista = listadelobos[i]
         
-        let lobo1=0;
-        let lobo2=0;
-        if(i%2==0){   
-            
-            let lobodalista = await pegarid();
-            
 
-            lobo1 =document.createElement("div");
-            let imagem_exemplo = document.createElement("div");
-            let fundo_azul = document.createElement("div");
-            let link_foto = document.createElement("a")
-            link_foto.href = "../ShowLobo/ShowLobo.html";
-            link_foto.addEventListener("click", async function() {
-                
-                const respotalink = await fetch('http://localhost:3000/lobosExtras', {
-                    method: 'POST',
-                    headers: {
-                      'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      id: lobodalista.id,
-                      nome: lobodalista.nome,
-                      idade: lobodalista.idade,
-                      descricao: lobodalista.descricao,
-                      imagem: lobodalista.imagem,
-                      adotado: lobodalista.adotado,
-                      nomeDono: lobodalista.nomeDono,
-                      idadeDono: lobodalista.idadeDono,
-                      emailDono: lobodalista.emailDono,
-                    })
-                  })
-                  const data = await respotalink.json();
-                  alert(data)
-                window.location.href = "ShowLobo.html"; 
-                
-            })           
-            let foto = document.createElement("img")
-            foto.src = "../images/loboexemplo.png"
-            foto.alt = "Lobo na floresta"
-            let texto_exemplo = document.createElement("div");
-            let texto = document.createElement("div");
-            let textodiv = document.createElement("div");
-            let nome = document.createElement("h2");
-            nome.innerText = lobodalista.nome;
-            let idade = document.createElement("p");
-            idade.innerText = `Idade:${lobodalista.idade}`;
-            let botao = document.createElement("button");
-            if( opcaoAtivada===true){
-                botao.innerText = "Adotado";
-                botao.addEventListener("click", function() {
-                    alert("Lobo já foi adotado!");
-                });
-            }else{
-                botao.innerText = "Adotar";
-                botao.addEventListener("click", function() {
-                    localStorage.setItem("lobotemp", lobodalista.id);
-                    window.location.href = "../AdotarLobo/AdotarLobo.html"; 
-                });
-            }
-            let descricao = document.createElement("p");
-            descricao.innerText = lobodalista.descricao;
-            lobo1.classList.add("lobo1");
-            imagem_exemplo.classList.add("imagem_exemplo");
-            fundo_azul.classList.add("fundo_azul");
-            foto.classList.add("imagem");
-            texto_exemplo.classList.add("texto_exemplo");
-            texto.classList.add("texto");
-            nome.classList.add("nome");
-            idade.classList.add("idade");
-            if( opcaoAtivada===true){
-                botao.classList.add("adotado_botao");
-            }else{
-                botao.classList.add("adotar_botao2");
-            }
-            descricao.classList.add("desc")
-            link_foto.append(foto);
-            imagem_exemplo.append(fundo_azul);
-            imagem_exemplo.append(link_foto);           
-            textodiv.append(nome);
-            textodiv.append(idade);
-            texto.append(textodiv);
-            texto.append(botao);
-            texto_exemplo.append(texto);
-            texto_exemplo.append(descricao);
-            lobo1.append(imagem_exemplo);
-            lobo1.append(texto_exemplo);         
-        }else{
-            let lobodalista2 = await pegarid();
-
-           
-
-            lobo2 =document.createElement("div");
-
-            let imagem_exemplo2 = document.createElement("div");
-
-            let fundo_azul2 = document.createElement("div");
-
-            let link_foto2 = document.createElement("a")
-            link_foto2.href = "../ShowLobo/ShowLobo.html";
-            link_foto2.addEventListener("click", async function() {
-                const respostalink2 = await fetch('http://localhost:3000/lobosExtras', {
-                    method: 'POST',
-                    headers: {
-                      'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                      id: lobodalista.id,
-                      nome: lobodalista2.nome,
-                      idade: lobodalista2.idade,
-                      descricao: lobodalista2.descricao,
-                      imagem: lobodalista2.i,imagem,
-                      adotado: lobodalista2.adotado,
-                      nomeDono: lobodalista2.nomeDono,
-                      idadeDono: lobodalista2.idadeDono,
-                      emailDono: lobodalista2.emailDono,
-                    })
-                  })
-                  const data = await respostalink2.json()
-                window.location.href = "ShowLobo.html"; 
+        let lobo =document.createElement("div");
+        let imagem_exemplo = document.createElement("div");
+        let fundo_azul = document.createElement("div");
+        let link_foto = document.createElement("a")
+        let src = i%2===0?"../images/loboexemplo.png":"../images/loboexemplo2.png"
+        
+        let foto = document.createElement("img")
+        foto.src = src
+        console.log(src)
+        link_foto.href = "../ShowLobo/ShowLobo.html"
+        link_foto.addEventListener("click", async function() {
+            const respotalink = await fetch('http://localhost:3000/lobosExtras', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: lobodalista.id,
+                    nome: lobodalista.nome,
+                    idade: lobodalista.idade,
+                    descricao: lobodalista.descricao,
+                    imagem: lobodalista.imagem,
+                    adotado: lobodalista.adotado,
+                    nomeDono: lobodalista.nomeDono,
+                    idadeDono: lobodalista.idadeDono,
+                    emailDono: lobodalista.emailDono,
+                    
+                }),
             })
-            
-            
-            let foto2 = document.createElement("img")
-            foto2.src = "../images/loboexemplo2.png"
-            foto2.alt = "Lobo na floresta"
-
-            let texto_exemplo2 = document.createElement("div");
-
-            let texto2 = document.createElement("div");
-
-            let textodiv2 = document.createElement("div");
-
-            let nome2 = document.createElement("h2");
-            nome2.innerText = lobodalista2.nome;
-
-            let idade2 = document.createElement("p");
-            idade2.innerText = `Idade:${lobodalista2.idade}`;
-
-            let botao2 = document.createElement("button");
-
-            if( opcaoAtivada===true){
-                botao2.innerText = "Adotado";
-                botao2.addEventListener("click", function() {
-                alert("Lobo já foi adotado!");
-                });
-
-            }else{
-                botao2.innerText = "Adotar";
-                botao2.addEventListener("click", function() {
-                    localStorage.setItem("lobotemp", lobodalista2.id);
-                    window.location.href = "../AdotarLobo/AdotarLobo.html"; 
-
-                });
-            }
-            let descricao2 = document.createElement("p");
-            descricao2.innerText = lobodalista2.descricao;
-
-            lobo2.classList.add("lobo2");
-            imagem_exemplo2.classList.add("imagem_exemplo2");
-            fundo_azul2.classList.add("fundo_azul2");
-            foto2.classList.add("imagem2");
-            texto_exemplo2.classList.add("texto_exemplo2");
-            texto2.classList.add("texto2");
-            nome2.classList.add("nome2");
-            idade2.classList.add("idade2");
-            if( opcaoAtivada===true){
-                botao2.classList.add("adotado_botao");
-            }else{
-                botao2.classList.add("adotar_botao2");
-            }
-
-            
-            descricao2.classList.add("desc2")
-
-            link_foto2.append(foto2);
-            imagem_exemplo2.append(fundo_azul2);
-            imagem_exemplo2.append(link_foto2);
-            
-            textodiv2.append(nome2);
-            textodiv2.append(idade2);
-            texto2.append(textodiv2);
-            texto2.append(botao2);
-            texto_exemplo2.append(texto2);
-            texto_exemplo2.append(descricao2);
-
-            lobo2.append(imagem_exemplo2);
-            lobo2.append(texto_exemplo2);
-
-        }
-        if(i%2==0){
-            let divexiste = document.querySelector(".lobo_exemplo");
-            divexiste.appendChild(lobo1);
+            const data = await respotalink.json();    
+            window.location.href ="../ShowLobo/ShowLobo.html"; 
+        })           
+        
+        
+        foto.alt = "Lobo na floresta"
+        let texto_exemplo = document.createElement("div");
+        let texto = document.createElement("div");
+        let textodiv = document.createElement("div");
+        let nome = document.createElement("h2");
+        nome.innerText = lobodalista.nome;
+        let idade = document.createElement("p");
+        idade.innerText = `Idade:${lobodalista.idade}`;
+        let botao = document.createElement("button");
+        if( opcaoAtivada===true){
+            botao.innerText = "Adotado";
+            botao.addEventListener("click", function() {
+            alert("Lobo já foi adotado!");
+            });
         }else{
-            let divexiste = document.querySelector(".lobo_exemplo");
-            divexiste.appendChild(lobo2);
+            botao.innerText = "Adotar";
+            botao.addEventListener("click", function() {
+            localStorage.setItem("lobotemp", lobodalista.id);
+            window.location.href = "../AdotarLobo/AdotarLobo.html"; 
+            });
         }
-
+        let descricao = document.createElement("p");
+        descricao.innerText = lobodalista.descricao;
+        
+        i%2===0? lobo.classList.add("lobo1"):lobo.classList.add("lobo2")
+        i%2===0? imagem_exemplo.classList.add("imagem_exemplo"):imagem_exemplo.classList.add("imagem_exemplo2")
+        i%2===0? fundo_azul.classList.add("fundo_azul"): fundo_azul.classList.add("fundo_azul2")
+        i%2===0? foto.classList.add("imagem"):foto.classList.add("imagem2")
+        i%2===0? texto_exemplo.classList.add("texto_exemplo"): texto_exemplo.classList.add("texto_exemplo2")
+        i%2===0? texto.classList.add("texto"):texto.classList.add("texto2")
+        i%2===0? nome.classList.add("nome"):nome.classList.add("nome2")
+        i%2===0? idade.classList.add("idade"):idade.classList.add("idade2")
+        i%2===0? descricao.classList.add("desc"):descricao.classList.add("desc2")
+        if( opcaoAtivada===true){
+            botao.classList.add("adotado_botao");
+        }else{
+            botao.classList.add("adotar_botao2");
+        }
+        
+        link_foto.append(foto);
+        imagem_exemplo.append(fundo_azul);
+        imagem_exemplo.append(link_foto);           
+        textodiv.append(nome);
+        textodiv.append(idade);
+        texto.append(textodiv);
+        texto.append(botao);
+        texto_exemplo.append(texto);
+        texto_exemplo.append(descricao);
+        lobo.append(imagem_exemplo);
+        lobo.append(texto_exemplo);         
+    
+        let divexiste = document.querySelector(".lobo_exemplo");
+        divexiste.appendChild(lobo);
     }
 }
 
@@ -452,9 +384,9 @@ async function buscar(){
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    
-    listapaginas();
-    listadelobos();
+    listadelobos()
+    listapaginas()
+    //criarimagens()
 });
 document.getElementById("busca_botao").addEventListener("click", buscar);
 document.getElementById("pesquisainput").addEventListener("keydown", function(event) {
@@ -465,4 +397,5 @@ document.getElementById("pesquisainput").addEventListener("keydown", function(ev
 });
 document.getElementById("avancar").addEventListener("click", avançar);
 document.getElementById("voltar").addEventListener("click", voltar);
+
 
