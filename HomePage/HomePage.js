@@ -1,133 +1,128 @@
-
-function escolherIndiceImpar() {
-  let indicealeatorio = 0;
-  while (indicealeatorio % 2 === 0) {
-    indicealeatorio = Math.floor(Math.random() * lobos.length);
-  }
-  let lobodalista = undefined;
-  while (lobodalista === undefined) {
-    lobodalista = lobos.find((item) => item.id === indicealeatorio);
-  }
-  return lobodalista;
-}
-
-function escolherIndicePar() {
-  let indicealeatorio = 1;
-  while (indicealeatorio % 2 !== 0) {
-    indicealeatorio = Math.floor(Math.random() * lobos.length);
-  }
-  let lobodalistapar = undefined;
-  while (lobodalistapar === undefined) {
-    lobodalistapar = lobos.find((item) => item.id === indicealeatorio);
-  }
-  return lobodalistapar;
-}
-
-function listadelobos() {
-  let primeirolobo = escolherIndiceImpar();
-  console.log(primeirolobo);
-  let segundolobo = escolherIndicePar();
-  console.log(segundolobo);
-
-  let engloba = document.createElement("div");
-
-  let imagem_exemplo = document.createElement("div");
-
-  let fundo_azul = document.createElement("div");
-
-  let link_foto = document.createElement("a");
-  link_foto.href = "../ShowLobo/ShowLobo.html";
-  link_foto.addEventListener("click", function () {
-    
-    window.location.href = "ShowLobo.html";
+async function getLobos() {
+  const resposta = await fetch("http://localhost:3000/lobos", {
+      method: "GET",
+      headers: { 'Content-type': 'application/json' },
   });
+  return await resposta.json();
+}
+console.log(getLobos())
 
-  let foto = document.createElement("img");
-  foto.src = "../images/loboexemplo.png";
-  foto.alt = "Foto do Lobo";
-
-  let texto_exemplo = document.createElement("div");
-
-  let nome = document.createElement("h2");
-  nome.innerText = primeirolobo.nome;
-
-  let idade = document.createElement("p");
-  idade.innerText = "Idade: " + primeirolobo.idade;
-  let descricao = document.createElement("p");
-  descricao.innerText = primeirolobo.descricao;
-
-  engloba.classList.add("engloba");
-  imagem_exemplo.classList.add("imagem_exemplo");
-  fundo_azul.classList.add("fundo_azul");
-  foto.classList.add("imagem");
-  texto_exemplo.classList.add("texto_exemplo");
-  nome.classList.add("nome");
-  idade.classList.add("idade");
-  descricao.classList.add("descricao");
-
-  link_foto.append(foto);
-
-  imagem_exemplo.append(fundo_azul);
-  imagem_exemplo.append(link_foto);
-
-  texto_exemplo.append(nome);
-  texto_exemplo.append(idade);
-  texto_exemplo.append(descricao);
-
-  engloba.append(imagem_exemplo);
-  engloba.append(texto_exemplo);
-
-  let lobo1 = document.querySelector(".lobo_exemplo1");
-  lobo1.append(engloba);
-
-  let engloba2 = document.createElement("div");
-
-  let imagem_exemplo2 = document.createElement("div");
-
-  let fundo_azul2 = document.createElement("div");
-
-  let link_foto2 = document.createElement("a");
-    link_foto2.href = "../ShowLobo/ShowLobo.html";
-    link_foto2.addEventListener("click", function () {
-      window.location.href = "ShowLobo.html";
-  });
-
-  let foto2 = document.createElement("img");
-    foto2.src = "../images/loboexemplo2.png";
-    foto2.alt = "Imagem do Lobo";
-
-  let texto_exemplo2 = document.createElement("div");
-
-  let nome2 = document.createElement("h2");
-  nome2.innerText = segundolobo.nome;
-
-  let idade2 = document.createElement("p");
-  idade2.innerText = "Idade: " + segundolobo.idade;
-
-  let descricao2 = document.createElement("p");
-  descricao2.innerText = segundolobo.descricao;
-
-  engloba2.classList.add("engloba2");
-  imagem_exemplo2.classList.add("imagem_exemplo2");
-  fundo_azul2.classList.add("fundo_azul2");
-  foto2.classList.add("imagem2");
-  texto_exemplo2.classList.add("texto_exemplo2");
-  nome2.classList.add("nome2");
-  idade2.classList.add("idade2");
-  descricao2.classList.add("descricao2");
-
-  link_foto2.append(foto2);
-  imagem_exemplo2.append(fundo_azul2);
-  imagem_exemplo2.append(link_foto2);
-  texto_exemplo2.append(nome2);
-  texto_exemplo2.append(idade2);
-  texto_exemplo2.append(descricao2);
-
-  engloba2.append(imagem_exemplo2);
-  engloba2.append(texto_exemplo2);
-
-  let lobo2 = document.querySelector(".lobo_exemplo2")
-  lobo2.append(engloba2)
+function escolherIndiceImpar(lobos) {
+  const lobosImpares = lobos.filter((_, index) => index % 2 !== 0);
+  return lobosImpares[Math.floor(Math.random() * lobosImpares.length)];
 }
 
-document.addEventListener("DOMContentLoaded", listadelobos());
+function escolherIndicePar(lobos) {
+  const lobosPares = lobos.filter((_, index) => index % 2 === 0);
+  return lobosPares[Math.floor(Math.random() * lobosPares.length)];
+}
+
+async function listadelobos() {
+  const lobos = await getLobos();
+  if (!lobos.length) {
+      console.error("Nenhum lobo encontrado!");
+      return;
+  }
+
+  const primeirolobo = escolherIndicePar(lobos);
+  const segundolobo = escolherIndiceImpar(lobos);
+
+  console.log(primeirolobo, segundolobo);
+
+  function criarElementoLobo1(lobo, containerSelector, imagemSrc) {
+      let engloba = document.createElement("div");
+      let imagemExemplo = document.createElement("div");
+      let fundoAzul = document.createElement("div");
+      let linkFoto = document.createElement("a");
+      let foto = document.createElement("img");
+      let textoExemplo = document.createElement("div");
+      let nome = document.createElement("h2");
+      let idade = document.createElement("p");
+      let descricao = document.createElement("p");
+
+      linkFoto.href = "../ShowLobo/ShowLobo.html";
+      linkFoto.addEventListener("click", async function (event) {
+          event.preventDefault();
+          await fetch('http://localhost:3000/lobosExtras', {
+              method: 'POST',
+              headers: { 'Content-type': 'application/json' },
+              body: JSON.stringify(lobo),
+          });
+          window.location.href = "ShowLobo.html";
+      });
+
+      foto.src = imagemSrc;
+      foto.alt = "Foto do Lobo";
+      nome.innerText = lobo.nome;
+      idade.innerText = `Idade: ${lobo.idade}`;
+      descricao.innerText = lobo.descricao;
+
+      engloba.classList.add("engloba");
+      imagemExemplo.classList.add("imagem_exemplo");
+      fundoAzul.classList.add("fundo_azul");
+      foto.classList.add("imagem");
+      textoExemplo.classList.add("texto_exemplo");
+      nome.classList.add("nome");
+      idade.classList.add("idade");
+      descricao.classList.add("descricao");
+
+      linkFoto.append(foto);
+      imagemExemplo.append(fundoAzul, linkFoto);
+      textoExemplo.append(nome, idade, descricao);
+      engloba.append(imagemExemplo, textoExemplo);
+
+      let container = document.querySelector(containerSelector);
+      container.innerHTML = "";
+      container.append(engloba);
+  }
+  function criarElementoLobo2(lobo, containerSelector, imagemSrc) {
+    let engloba = document.createElement("div");
+    let imagemExemplo = document.createElement("div");
+    let fundoAzul = document.createElement("div");
+    let linkFoto = document.createElement("a");
+    let foto = document.createElement("img");
+    let textoExemplo = document.createElement("div");
+    let nome = document.createElement("h2");
+    let idade = document.createElement("p");
+    let descricao = document.createElement("p");
+
+    linkFoto.href = "../ShowLobo/ShowLobo.html";
+    linkFoto.addEventListener("click", async function (event) {
+        event.preventDefault();
+        await fetch('http://localhost:3000/lobosExtras', {
+            method: 'POST',
+            headers: { 'Content-type': 'application/json' },
+            body: JSON.stringify(lobo),
+        });
+        window.location.href = "ShowLobo.html";
+    });
+
+    foto.src = imagemSrc;
+    foto.alt = "Foto do Lobo";
+    nome.innerText = lobo.nome;
+    idade.innerText = `Idade: ${lobo.idade}`;
+    descricao.innerText = lobo.descricao;
+
+    engloba.classList.add("engloba2");
+    imagemExemplo.classList.add("imagem_exemplo2");
+    fundoAzul.classList.add("fundo_azul2");
+    foto.classList.add("imagem2");
+    textoExemplo.classList.add("texto_exemplo2");
+    nome.classList.add("nome2");
+    idade.classList.add("idade2");
+    descricao.classList.add("descricao2");
+
+    linkFoto.append(foto);
+    imagemExemplo.append(fundoAzul, linkFoto);
+    textoExemplo.append(nome, idade, descricao);
+    engloba.append(imagemExemplo, textoExemplo);
+
+    let container = document.querySelector(containerSelector);
+    container.innerHTML = "";
+    container.append(engloba);
+}
+  criarElementoLobo1(primeirolobo, ".lobo_exemplo1", "../images/loboexemplo.png");
+  criarElementoLobo2(segundolobo, ".lobo_exemplo2", "../images/loboexemplo2.png");
+}
+
+document.addEventListener("DOMContentLoaded", listadelobos);
