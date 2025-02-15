@@ -2,6 +2,8 @@ Adote um Lob[IN]ho é um projeto desenvolvido pela IN Junior para o processo sel
 
 O site foi desenvolvido utilizando HTML, CSS e JavaScript, proporcionando uma experiência imersiva. Ele conta com seis páginas:
 
+Neste projeto foi usado ferramentas de API e Promises, utilizando-se de um banco de dados para armazenamento de nossa lista de lobos e donos
+
 Home Page: página principal, onde são apresentados detalhes sobre a iniciativa, seus valores e alguns exemplos de lobinhos.
 Lista de Lobinhos: exibe os lobos disponíveis para adoção, com suas características e uma barra de pesquisa para facilitar a busca.
 Adicionar Lobinho: contém um formulário para cadastrar um novo lobinho, com campos para nome, idade, foto e descrição.
