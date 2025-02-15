@@ -296,7 +296,7 @@ async function buscar(){
         link_foto.href = "../ShowLobo/ShowLobo.html";
         link_foto.addEventListener("click", function() {
             let loboatualid = loboescolhido.id;
-            //localStorage.setItem("lobotemp", loboatualid);
+            localStorage.setItem("lobotemp", loboatualid);
             window.location.href = "ShowLobo.html"; 
         })
         
@@ -331,7 +331,7 @@ async function buscar(){
         }else{
             botao.innerText = "Adotar";
             botao.addEventListener("click", function() {
-                //localStorage.setItem("lobotemp", loboescolhido.id);
+                localStorage.setItem("lobotemp", loboescolhido.id);
                 
                 window.location.href = "../AdotarLobo/AdotarLobo.html"; 
             });
