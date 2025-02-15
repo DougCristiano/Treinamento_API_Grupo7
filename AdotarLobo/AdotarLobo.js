@@ -81,8 +81,20 @@ async function adotarlobo() {
 
         if (!resposta.ok) throw new Error("Erro ao salvar a adoção.");
 
-        alert(`Meus parabéns! O lobinho ${lobodalista.nome} será seu companheiro :)`);
+        let resposta2 = await fetch(`http://localhost:3000/Donos`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                loboid: lobodalista.id,
+                nome: nome,
+                idadeDone: Number(idade),
+                emailDono: email
+            })
+        });
+        if (!resposta2.ok) throw new Error("Erro ao salvar a adoção.");
         window.location.href = "../ListaDeLobos/ListaDeLobos.html";
+        alert(`Meus parabéns! O lobinho ${lobodalista.nome} será seu companheiro :)`);
+        
     } catch (erro) {
         console.error("Erro ao adotar lobo:", erro);
     }

@@ -46,8 +46,10 @@ async function aparecerlobo() {
                 },
             })
             const data = await respostadeletarlobo.json()
-            alert(`Lobo com ID ${idRemove} removido.`);
+            console.log(data)
             window.location.href = "../ListaDeLobos/ListaDeLobos.html";
+            alert(`Lobo com ID ${idRemove} removido.`);
+            
         } else {
             alert("Ação cancelada.");
             return;

@@ -301,12 +301,16 @@ async function buscar(){
         })
         
         let foto = document.createElement("img")
-        if(loboescolhido.id%2===0){
-            foto.src = "../images/loboexemplo2.png"  
-        }else{
-            foto.src = "../images/loboexemplo.png"
+        let src= lobodalistabusca.imagem
+        if(src!="../images/loboexemplo2.png" && src!="../images/loboexemplo.png"){
+            if(lobodalistabusca.id%2===0){
+                src = "../images/loboexemplo2.png"
+            }else{
+                src = "../images/loboexemplo.png"
+            }
         }
         
+        foto.src = src
         foto.alt = "Lobo na floresta"
     
         let texto_exemplo = document.createElement("div");
