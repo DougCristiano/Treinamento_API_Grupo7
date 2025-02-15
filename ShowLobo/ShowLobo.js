@@ -19,13 +19,13 @@ async function aparecerlobo() {
     let imagem = document.createElement("img");
     let src = lobodalista.imagem
     if(src!="../images/loboexemplo2.png" && src!="../images/loboexemplo.png"){
-      if(lobodalistabusca.id%2===0){
+      if(Number(lobodalista.id)%2===0){
           src = "../images/loboexemplo2.png"
       }else{
           src = "../images/loboexemplo.png"
       }
   }
-    imagem.src = lobodalista.imagem
+    imagem.src = src;
     imagem.alt = "Lobo na floresta";
     let botao_adocao = document.createElement("div");
     let adota = document.createElement("div");

@@ -92,12 +92,12 @@ async function adotarlobo() {
             })
         });
         if (!resposta2.ok) throw new Error("Erro ao salvar a adoção.");
-        window.location.href = "../ListaDeLobos/ListaDeLobos.html";
-        alert(`Meus parabéns! O lobinho ${lobodalista.nome} será seu companheiro :)`);
-        
+                
     } catch (erro) {
         console.error("Erro ao adotar lobo:", erro);
     }
+    window.location.href = "../ListaDeLobos/ListaDeLobos.html";
+    await alert(`Meus parabéns! O lobinho ${lobodalista.nome} será seu companheiro :)`);
 }
 
 document.getElementById("botao_adota").addEventListener("click", adotarlobo);
