@@ -17,7 +17,14 @@ async function aparecerlobo() {
     let imagem_exemplo = document.createElement("div");
     let fundo_azul = document.createElement("div");
     let imagem = document.createElement("img");
-    
+    let src = lobodalista.imagem
+    if(src!="../images/loboexemplo2.png" && src!="../images/loboexemplo.png"){
+      if(lobodalistabusca.id%2===0){
+          src = "../images/loboexemplo2.png"
+      }else{
+          src = "../images/loboexemplo.png"
+      }
+  }
     imagem.src = lobodalista.imagem
     imagem.alt = "Lobo na floresta";
     let botao_adocao = document.createElement("div");
